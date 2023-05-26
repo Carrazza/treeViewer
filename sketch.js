@@ -1,9 +1,30 @@
 
-const nodeDiameter = 15
+const nodeDiameter = 35
 let node;
+let nodeList= [];
+class Controller{
 
-for(let i = 0 ; i < 200 ; i+=20)
-{
+	addNode(node){
+		nodeList.push(node);
+	}
+
+	addEdge(from,to){
+		
+		for(let node of nodeList)
+		{
+			if(node.id === from.id)
+			{
+				from.filhos.push(to)
+			}
+
+			else(node.id === to.id)
+			{
+				to.pais.push(from)
+			}
+		}
+
+
+	}
 
 }
 
@@ -11,11 +32,26 @@ class Node{
 	x
 	y
 	filhos
+	pais
 	id
-	constructor(x, y)
+
+	constructor(x, y,id)
 	{
 		this.x = x;
 		this.y = y;
+		this.id = id;
+	}
+
+	click(px,py)
+	{
+		let d = dist(px,py,this.x,this.y)
+
+		if(d <= nodeDiameter/2) console.log("foi")
+
+
+		console.log(d)
+		console.log(mouseX,mouseY,node.x,node.y)
+
 	}
 }
 
@@ -27,7 +63,9 @@ function setup(){
 	createCanvas(800, 600);
 	frameRate(30)
 
-	node = new Node(100, 50);
+	node = new Node(100, 50,"teste");
+
+	node2 = new Node(150,200,"teste");
 
 	console.log(node.x, node.y);
 
@@ -39,14 +77,17 @@ let value = 0;
 function draw()
 {
 	
-	
+	circle(node.x, node.y,nodeDiameter);
+	circle(node2.x, node2.y,nodeDiameter);
+
+	line(node.x, node.y, node2.x,node2.y)
 
 }
 
 function mouseClicked() {
 
-	fill(value);
-	circle(mouseX,mouseY,nodeDiameter)
+	node.click(mouseX,mouseY)
+	node2.click(mouseX,mouseY)
 
 
 }
